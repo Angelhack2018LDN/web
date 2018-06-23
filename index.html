@@ -5,7 +5,7 @@
                 <script type="text/javascript">
 try {
         var app = new Clarifai.App({
-//                apiKey: "d04d351d973b43598e9b091348968a59"
+                //                apiKey: "d04d351d973b43598e9b091348968a59"
                 apiKey: "b2b8e0a2537840a6a689bc1c637481da"
         });
 }
@@ -15,14 +15,24 @@ catch(err) {
 }
 
 var apiKey = "d04d351d973b43598e9b091348968a59";
-app.inputs.search({ input: {url: 'https://www.biography.com/.image/t_share/MTE1ODA0OTcxODE3OTI4MjA1/denzel-washington-9524687-2-402.jpg'} }).then(
-function(response) {
-        console.log(response)
-},
-        function(err) {
-                console.log("Error " + err);
-        }
-);
+app.models.predict({id:'justin', version:'af24a44de2794175b2ff2f9bcc4ab141'}, "https://www.biography.com/.image/t_share/MTE1ODA0OTcxODE3OTI4MjA1/denzel-washington-9524687-2-402.jpg").then(
+                // app.inputs.search({ input: {url: 'https://www.biography.com/.image/t_share/MTE1ODA0OTcxODE3OTI4MjA1/denzel-washington-9524687-2-402.jpg'} }).then(
+                function(response) {
+                        var conceptName = response.outputs[0].data.concepts[0].name;
+                        console.log("Concept id: ", conceptName);
+                        app.inputs.search({ concept: {name: conceptName} }).then(
+                                        function(response2) {
+                                                console.log(response2);
+                                        },
+                                        function(err) {
+                                                console.log("Concept image search error: " + err);
+                                        }
+                                        );
+                },
+                function(err) {
+                        console.log("Error " + err);
+                }
+                );
                 </script>
         </body>
 </html>
