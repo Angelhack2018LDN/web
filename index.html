@@ -1,0 +1,28 @@
+<html>
+        <body>
+
+                <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
+                <script type="text/javascript">
+try {
+        var app = new Clarifai.App({
+//                apiKey: "d04d351d973b43598e9b091348968a59"
+                apiKey: "b2b8e0a2537840a6a689bc1c637481da"
+        });
+}
+catch(err) {
+        alert("Need a valid API Key!");
+        throw "Invalid API Key";
+}
+
+var apiKey = "d04d351d973b43598e9b091348968a59";
+app.inputs.search({ input: {url: 'https://www.biography.com/.image/t_share/MTE1ODA0OTcxODE3OTI4MjA1/denzel-washington-9524687-2-402.jpg'} }).then(
+function(response) {
+        console.log(response)
+},
+        function(err) {
+                console.log("Error " + err);
+        }
+);
+                </script>
+        </body>
+</html>
